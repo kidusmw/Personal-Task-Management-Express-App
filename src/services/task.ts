@@ -1,11 +1,10 @@
 import prisma from "../lib/prisma";
 import { Status } from "../generated/prisma/enums";
+import { TaskQuery } from "../types/task";
 
 export async function getTasks(
   userId: number,
-  page: number,
-  limit: number,
-  search?: string,
+  { page, limit, search }: TaskQuery,
 ) {
   const skip = (page - 1) * limit;
   const take = limit;
