@@ -28,3 +28,20 @@ pnpm dev
 
 ### Required Environment Variables
 Create a `.env` file in the root with the following:
+DATABASE_URL="file:./dev.db"
+PORT=3000
+JWT_SECRET=your_secret_here
+
+## API Endpoints
+### Auth
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+
+### Tasks (protected)
+- `GET /api/tasks`
+- `GET /api/tasks/:id`
+- `POST /api/tasks`
+- `PATCH /api/tasks/:id`
+- `DELETE /api/tasks/:id`
+
+---
