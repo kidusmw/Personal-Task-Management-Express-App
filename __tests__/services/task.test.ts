@@ -1,8 +1,12 @@
 import { describe, it, expect } from "vitest";
 import { prismaMock } from "../helpers/prismaMock";
-import { getTasksById, createTask } from "../../src/services/task";
+import {
+  getTasksById,
+  createTask,
+  updateTask,
+  deleteTask,
+} from "../../src/services/task";
 import { Status } from "../../src/generated/prisma/enums";
-import { fa } from "zod/v4/locales";
 
 describe("getTaskById", () => {
   // HAPPY PATH
@@ -46,5 +50,25 @@ describe("createTask", () => {
       status: fakeTask.status,
     });
     expect(result).toEqual(fakeTask);
+  });
+});
+
+describe("updateTask", () => {
+  it("should update and return the updated task", async () => {
+    const fakeTask = {
+      id: 1,
+      subject: "Test Subject",
+      description: "Test Description",
+      status: "PENDING" as Status,
+      deadline: null,
+      userId: 1,
+      createdAt: new Date(),
+    };
+    prismaMock.task.update.mockResolvedValue(fakeTask);
+    const result = await updateTask(1, 1, {
+      subject: fakeTask.subject,
+      status: fakeTask.status,
+    });
+    await expect(result).toEqual(fakeTask);
   });
 });
