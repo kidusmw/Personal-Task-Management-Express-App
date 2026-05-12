@@ -4,6 +4,7 @@ import { getTasksById } from "../../src/services/task";
 import { Status } from "../../src/generated/prisma/enums";
 
 describe("getTaskById", () => {
+  // HAPPY PATH
   it("should return a task when valid userId and taskId are provided", async () => {
     const fakeTask = {
       id: 1,
@@ -17,5 +18,11 @@ describe("getTaskById", () => {
     prismaMock.task.findFirst.mockResolvedValue(fakeTask);
     const result = await getTasksById(1, 1);
     expect(result).toEqual(fakeTask);
+  });
+
+  // SAD PATH
+  it('should throw "Task Not Found" when task does not exist', async () => {
+    prismaMock.task.findFirst.mockResolvedValue(null);
+    await expect(getTasksById(1, 1)).rejects.toThrow("Task Not Found");
   });
 });
