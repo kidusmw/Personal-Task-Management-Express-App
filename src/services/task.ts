@@ -1,6 +1,6 @@
 import prisma from "../lib/prisma";
 import { Status } from "../generated/prisma/enums";
-import { TaskQuery } from "../types/task";
+import { CreateTask, TaskQuery, UpdateTask } from "../types/task";
 
 export async function getTasks(
   userId: number,
@@ -44,10 +44,7 @@ export async function getTasksById(userId: number, taskId: number) {
 
 export async function createTask(
   userId: number,
-  subject: string,
-  description: string,
-  status: Status,
-  deadline?: Date,
+  { subject, description, status, deadline }: CreateTask,
 ) {
   const new_task = await prisma.task.create({
     data: {
@@ -64,12 +61,7 @@ export async function createTask(
 export async function updateTask(
   taskId: number,
   userId: number,
-  data: Partial<{
-    subject: string;
-    description: string;
-    status: Status;
-    deadline: Date;
-  }>,
+  data: UpdateTask,
 ) {
   return prisma.task.update({
     where: { id: taskId, userId },
