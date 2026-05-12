@@ -69,6 +69,23 @@ describe("updateTask", () => {
       subject: fakeTask.subject,
       status: fakeTask.status,
     });
-    await expect(result).toEqual(fakeTask);
+    expect(result).toEqual(fakeTask);
+  });
+});
+
+describe("deleteTask", () => {
+  it("should delete and return the deleted task", async () => {
+    const fakeTask = {
+      id: 1,
+      subject: "Test Subject",
+      description: "Test Description",
+      status: "PENDING" as Status,
+      deadline: null,
+      userId: 1,
+      createdAt: new Date(),
+    };
+    prismaMock.task.delete.mockResolvedValue(fakeTask);
+    const result = await deleteTask(1, 1);
+    expect(result).toEqual(fakeTask);
   });
 });
