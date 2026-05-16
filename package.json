@@ -7,12 +7,12 @@
     "dev": "nodemon --watch src --ext ts --exec tsx src/index.ts",
     "start": "node dist/index.js",
     "build": "tsc",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test": "dotenv -e .env.test vitest",
+    "test:coverage": "dotenv -e .env.test vitest run --coverage"
   },
   "vitest": {
     "include": [
-      "__test__/**/*.test.ts"
+      "__tests__/**/*.test.ts"
     ],
     "environment": "node"
   },
@@ -27,6 +27,7 @@
     "@types/node": "^25.6.0",
     "@types/supertest": "^7.2.0",
     "@vitest/coverage-v8": "^4.1.6",
+    "dotenv-cli": "^11.0.0",
     "nodemon": "^3.1.14",
     "supertest": "^7.2.2",
     "tsx": "^4.21.0",
