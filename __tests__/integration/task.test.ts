@@ -2,7 +2,6 @@ import request from "supertest";
 import { describe, it, expect, beforeEach } from "vitest";
 import app from "../../src/index";
 import prisma from "../../src/lib/prisma";
-import { unknown } from "zod/v3";
 
 let token: string;
 let taskId: number;
