@@ -99,8 +99,23 @@ describe("POST /api/task", () => {
 });
 
 describe("PATCH /api/task/:id", () => {
-  it("should return 200 when task updated", async () => {});
-  it("should return 401 when no token provided", async () => {});
+  it("should return 200 when task updated", async () => {
+    const response = await request(app)
+      .patch(`/api/task/${taskId}`)
+      .send({
+        subject: "test",
+        description: "test",
+      })
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+  it("should return 401 when no token provided", async () => {
+    const response = await request(app).patch(`/api/task/${taskId}`).send({
+      subject: "test",
+      description: "test",
+    });
+    expect(response.status).toBe(401);
+  });
 });
 
 describe("DELETE /api/task/:id", () => {
