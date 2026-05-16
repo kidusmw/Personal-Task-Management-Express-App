@@ -119,6 +119,14 @@ describe("PATCH /api/task/:id", () => {
 });
 
 describe("DELETE /api/task/:id", () => {
-  it("should return 200 when task deleted", async () => {});
-  it("should return 401 when no token provided", async () => {});
+  it("should return 200 when task deleted", async () => {
+    const response = await request(app)
+      .delete(`/api/task/${taskId}`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+  it("should return 401 when no token provided", async () => {
+    const response = await request(app).delete(`/api/task/${taskId}`);
+    expect(response.status).toBe(401);
+  });
 });
