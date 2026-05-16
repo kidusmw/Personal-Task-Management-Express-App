@@ -2,6 +2,7 @@ import request from "supertest";
 import { describe, it, expect, beforeEach } from "vitest";
 import app from "../../src/index";
 import prisma from "../../src/lib/prisma";
+import { unknown } from "zod/v3";
 
 let token: string;
 let taskId: number;
@@ -55,14 +56,46 @@ describe("GET /api/task/:id", () => {
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
   });
-  it("should return 404 when task not found", async () => {});
-  it("should return 401 when no token provided", async () => {});
+  it("should return 404 when task not found", async () => {
+    const response = await request(app)
+      .get(`/api/task/99999`)
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toBe(404);
+  });
+  it("should return 401 when no token provided", async () => {
+    const response = await request(app).get(`/api/task/${taskId}`);
+    expect(response.status).toBe(401);
+  });
 });
 
 describe("POST /api/task", () => {
-  it("should return 201 when valid data provided", async () => {});
-  it("should return 400 when invalid data provided", async () => {});
-  it("should return 401 when no token provided", async () => {});
+  it("should return 201 when valid data provided", async () => {
+    const response = await request(app)
+      .post("/api/task")
+      .send({
+        subject: "test",
+        description: "test",
+      })
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toBe(201);
+  });
+  it("should return 400 when invalid data provided", async () => {
+    const response = await request(app)
+      .post("/api/task")
+      .send({
+        subject: 2,
+        description: "test",
+      })
+      .set("Authorization", `Bearer ${token}`);
+    expect(response.status).toBe(400);
+  });
+  it("should return 401 when no token provided", async () => {
+    const response = await request(app).post("/api/task").send({
+      subject: "test",
+      description: "test",
+    });
+    expect(response.status).toBe(401);
+  });
 });
 
 describe("PATCH /api/task/:id", () => {
