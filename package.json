@@ -10,12 +10,6 @@
     "test": "dotenv -e .env.test vitest",
     "test:coverage": "dotenv -e .env.test vitest run --coverage"
   },
-  "vitest": {
-    "include": [
-      "__tests__/**/*.test.ts"
-    ],
-    "environment": "node"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
