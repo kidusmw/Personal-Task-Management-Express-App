@@ -22,7 +22,7 @@ export async function loginUser(
 ) {
   try {
     const { email, password } = req.body;
-    const result = await login(email, password);
+    const result = await login({ email, password });
     res.status(200).json(result);
   } catch (err) {
     next(err);

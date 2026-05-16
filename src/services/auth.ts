@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import prisma from "../lib/prisma";
+import { Login } from "../types/auth";
 import "dotenv/config";
 
 export async function register(
@@ -32,7 +33,7 @@ export async function register(
   });
 }
 
-export async function login(email: string, password: string) {
+export async function login({ email, password }: Login) {
   const user = await prisma.user.findUnique({
     where: { email },
   });
