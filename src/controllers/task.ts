@@ -47,13 +47,12 @@ export async function createTaskHandler(
   try {
     const { subject, description, status, deadline } = req.body;
     const userId = req.user!.id;
-    const result = await createTask(
-      userId,
+    const result = await createTask(userId, {
       subject,
       description,
       status,
       deadline,
-    );
+    });
     res.status(201).json({
       message: "Task created",
       result,

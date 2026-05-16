@@ -5,8 +5,8 @@ import prisma from "../../src/lib/prisma";
 import { beforeEach } from "vitest";
 
 beforeEach(async () => {
-  await prisma.user.deleteMany();
   await prisma.task.deleteMany();
+  await prisma.user.deleteMany();
 });
 
 describe("POST /api/auth/register", () => {
